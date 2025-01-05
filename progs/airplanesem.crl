@@ -1,0 +1,48 @@
+begin main
+seats += 3
+-> l1
+l1 <-
+call sub1, sub2
+-> l2
+l2 <-
+skip
+end main
+
+begin sub1
+skip
+-> l3
+l3;l4 <- agent1==0
+V sem
+seats>0 -> l5;l7
+l5 <-
+seats -= 1
+-> l13
+l13 <-
+P sem
+-> l6
+l6 <-
+agent1 += 1
+-> l4
+l7 <-
+P sem
+end sub1
+
+begin sub2
+skip
+-> l8
+l8;l9 <- agent2==0
+V sem
+seats>0 -> l10;l12
+l10 <-
+seats -= 1
+-> l14
+l14 <-
+P sem
+-> l11
+l11 <-
+agent2 += 1
+-> l9
+l12 <-
+P sem
+end sub2
+

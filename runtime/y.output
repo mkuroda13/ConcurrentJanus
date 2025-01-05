@@ -1,0 +1,642 @@
+
+state 0
+	$accept: .expr $end 
+
+	NUM  shift 11
+	IDENT  shift 12
+	MINUS  shift 10
+	LPR  shift 9
+	.  error
+
+	variable  goto 8
+	expr1  goto 2
+	expr2  goto 3
+	expr3  goto 4
+	expr4  goto 5
+	expr5  goto 6
+	expr6  goto 7
+	expr  goto 1
+
+state 1
+	$accept:  expr.$end 
+
+	$end  accept
+	.  error
+
+
+state 2
+	expr:  expr1.    (1)
+	expr1:  expr1.OR expr2 
+
+	OR  shift 13
+	.  reduce 1 (src line 22)
+
+
+state 3
+	expr1:  expr2.    (2)
+	expr2:  expr2.AND expr3 
+
+	AND  shift 14
+	.  reduce 2 (src line 26)
+
+
+state 4
+	expr2:  expr3.    (4)
+	expr3:  expr3.LEQ expr4 
+	expr3:  expr3.GEQ expr4 
+	expr3:  expr3.EQ expr4 
+	expr3:  expr3.EQ EQ expr4 
+	expr3:  expr3.NEQ expr4 
+	expr3:  expr3.LES expr4 
+	expr3:  expr3.GRT expr4 
+
+	LEQ  shift 15
+	GEQ  shift 16
+	NEQ  shift 18
+	EQ  shift 17
+	LES  shift 19
+	GRT  shift 20
+	.  reduce 4 (src line 38)
+
+
+state 5
+	expr3:  expr4.    (6)
+	expr4:  expr4.PLUS expr5 
+	expr4:  expr4.MINUS expr5 
+	expr4:  expr4.BITOR expr5 
+	expr4:  expr4.XOR expr5 
+
+	PLUS  shift 21
+	MINUS  shift 22
+	XOR  shift 24
+	BITOR  shift 23
+	.  reduce 6 (src line 51)
+
+
+state 6
+	expr4:  expr5.    (14)
+	expr5:  expr5.MULT expr6 
+	expr5:  expr5.DIV expr6 
+	expr5:  expr5.MOD expr6 
+	expr5:  expr5.BITAND expr6 
+
+	MULT  shift 25
+	DIV  shift 26
+	MOD  shift 27
+	BITAND  shift 28
+	.  reduce 14 (src line 111)
+
+
+state 7
+	expr5:  expr6.    (19)
+
+	.  reduce 19 (src line 128)
+
+
+state 8
+	expr6:  variable.    (24)
+
+	.  reduce 24 (src line 146)
+
+
+state 9
+	expr6:  LPR.expr1 RPR 
+
+	NUM  shift 11
+	IDENT  shift 12
+	MINUS  shift 10
+	LPR  shift 9
+	.  error
+
+	variable  goto 8
+	expr1  goto 29
+	expr2  goto 3
+	expr3  goto 4
+	expr4  goto 5
+	expr5  goto 6
+	expr6  goto 7
+
+state 10
+	expr6:  MINUS.variable 
+
+	NUM  shift 11
+	IDENT  shift 12
+	.  error
+
+	variable  goto 30
+
+state 11
+	variable:  NUM.    (27)
+
+	.  reduce 27 (src line 159)
+
+
+state 12
+	variable:  IDENT.    (28)
+	variable:  IDENT.LSB expr1 RSB 
+
+	LSB  shift 31
+	.  reduce 28 (src line 163)
+
+
+state 13
+	expr1:  expr1 OR.expr2 
+
+	NUM  shift 11
+	IDENT  shift 12
+	MINUS  shift 10
+	LPR  shift 9
+	.  error
+
+	variable  goto 8
+	expr2  goto 32
+	expr3  goto 4
+	expr4  goto 5
+	expr5  goto 6
+	expr6  goto 7
+
+state 14
+	expr2:  expr2 AND.expr3 
+
+	NUM  shift 11
+	IDENT  shift 12
+	MINUS  shift 10
+	LPR  shift 9
+	.  error
+
+	variable  goto 8
+	expr3  goto 33
+	expr4  goto 5
+	expr5  goto 6
+	expr6  goto 7
+
+state 15
+	expr3:  expr3 LEQ.expr4 
+
+	NUM  shift 11
+	IDENT  shift 12
+	MINUS  shift 10
+	LPR  shift 9
+	.  error
+
+	variable  goto 8
+	expr4  goto 34
+	expr5  goto 6
+	expr6  goto 7
+
+state 16
+	expr3:  expr3 GEQ.expr4 
+
+	NUM  shift 11
+	IDENT  shift 12
+	MINUS  shift 10
+	LPR  shift 9
+	.  error
+
+	variable  goto 8
+	expr4  goto 35
+	expr5  goto 6
+	expr6  goto 7
+
+state 17
+	expr3:  expr3 EQ.expr4 
+	expr3:  expr3 EQ.EQ expr4 
+
+	NUM  shift 11
+	IDENT  shift 12
+	MINUS  shift 10
+	EQ  shift 37
+	LPR  shift 9
+	.  error
+
+	variable  goto 8
+	expr4  goto 36
+	expr5  goto 6
+	expr6  goto 7
+
+state 18
+	expr3:  expr3 NEQ.expr4 
+
+	NUM  shift 11
+	IDENT  shift 12
+	MINUS  shift 10
+	LPR  shift 9
+	.  error
+
+	variable  goto 8
+	expr4  goto 38
+	expr5  goto 6
+	expr6  goto 7
+
+state 19
+	expr3:  expr3 LES.expr4 
+
+	NUM  shift 11
+	IDENT  shift 12
+	MINUS  shift 10
+	LPR  shift 9
+	.  error
+
+	variable  goto 8
+	expr4  goto 39
+	expr5  goto 6
+	expr6  goto 7
+
+state 20
+	expr3:  expr3 GRT.expr4 
+
+	NUM  shift 11
+	IDENT  shift 12
+	MINUS  shift 10
+	LPR  shift 9
+	.  error
+
+	variable  goto 8
+	expr4  goto 40
+	expr5  goto 6
+	expr6  goto 7
+
+state 21
+	expr4:  expr4 PLUS.expr5 
+
+	NUM  shift 11
+	IDENT  shift 12
+	MINUS  shift 10
+	LPR  shift 9
+	.  error
+
+	variable  goto 8
+	expr5  goto 41
+	expr6  goto 7
+
+state 22
+	expr4:  expr4 MINUS.expr5 
+
+	NUM  shift 11
+	IDENT  shift 12
+	MINUS  shift 10
+	LPR  shift 9
+	.  error
+
+	variable  goto 8
+	expr5  goto 42
+	expr6  goto 7
+
+state 23
+	expr4:  expr4 BITOR.expr5 
+
+	NUM  shift 11
+	IDENT  shift 12
+	MINUS  shift 10
+	LPR  shift 9
+	.  error
+
+	variable  goto 8
+	expr5  goto 43
+	expr6  goto 7
+
+state 24
+	expr4:  expr4 XOR.expr5 
+
+	NUM  shift 11
+	IDENT  shift 12
+	MINUS  shift 10
+	LPR  shift 9
+	.  error
+
+	variable  goto 8
+	expr5  goto 44
+	expr6  goto 7
+
+state 25
+	expr5:  expr5 MULT.expr6 
+
+	NUM  shift 11
+	IDENT  shift 12
+	MINUS  shift 10
+	LPR  shift 9
+	.  error
+
+	variable  goto 8
+	expr6  goto 45
+
+state 26
+	expr5:  expr5 DIV.expr6 
+
+	NUM  shift 11
+	IDENT  shift 12
+	MINUS  shift 10
+	LPR  shift 9
+	.  error
+
+	variable  goto 8
+	expr6  goto 46
+
+state 27
+	expr5:  expr5 MOD.expr6 
+
+	NUM  shift 11
+	IDENT  shift 12
+	MINUS  shift 10
+	LPR  shift 9
+	.  error
+
+	variable  goto 8
+	expr6  goto 47
+
+state 28
+	expr5:  expr5 BITAND.expr6 
+
+	NUM  shift 11
+	IDENT  shift 12
+	MINUS  shift 10
+	LPR  shift 9
+	.  error
+
+	variable  goto 8
+	expr6  goto 48
+
+state 29
+	expr1:  expr1.OR expr2 
+	expr6:  LPR expr1.RPR 
+
+	OR  shift 13
+	RPR  shift 49
+	.  error
+
+
+state 30
+	expr6:  MINUS variable.    (26)
+
+	.  reduce 26 (src line 154)
+
+
+state 31
+	variable:  IDENT LSB.expr1 RSB 
+
+	NUM  shift 11
+	IDENT  shift 12
+	MINUS  shift 10
+	LPR  shift 9
+	.  error
+
+	variable  goto 8
+	expr1  goto 50
+	expr2  goto 3
+	expr3  goto 4
+	expr4  goto 5
+	expr5  goto 6
+	expr6  goto 7
+
+state 32
+	expr1:  expr1 OR expr2.    (3)
+	expr2:  expr2.AND expr3 
+
+	AND  shift 14
+	.  reduce 3 (src line 30)
+
+
+state 33
+	expr2:  expr2 AND expr3.    (5)
+	expr3:  expr3.LEQ expr4 
+	expr3:  expr3.GEQ expr4 
+	expr3:  expr3.EQ expr4 
+	expr3:  expr3.EQ EQ expr4 
+	expr3:  expr3.NEQ expr4 
+	expr3:  expr3.LES expr4 
+	expr3:  expr3.GRT expr4 
+
+	LEQ  shift 15
+	GEQ  shift 16
+	NEQ  shift 18
+	EQ  shift 17
+	LES  shift 19
+	GRT  shift 20
+	.  reduce 5 (src line 42)
+
+
+state 34
+	expr3:  expr3 LEQ expr4.    (7)
+	expr4:  expr4.PLUS expr5 
+	expr4:  expr4.MINUS expr5 
+	expr4:  expr4.BITOR expr5 
+	expr4:  expr4.XOR expr5 
+
+	PLUS  shift 21
+	MINUS  shift 22
+	XOR  shift 24
+	BITOR  shift 23
+	.  reduce 7 (src line 55)
+
+
+state 35
+	expr3:  expr3 GEQ expr4.    (8)
+	expr4:  expr4.PLUS expr5 
+	expr4:  expr4.MINUS expr5 
+	expr4:  expr4.BITOR expr5 
+	expr4:  expr4.XOR expr5 
+
+	PLUS  shift 21
+	MINUS  shift 22
+	XOR  shift 24
+	BITOR  shift 23
+	.  reduce 8 (src line 63)
+
+
+state 36
+	expr3:  expr3 EQ expr4.    (9)
+	expr4:  expr4.PLUS expr5 
+	expr4:  expr4.MINUS expr5 
+	expr4:  expr4.BITOR expr5 
+	expr4:  expr4.XOR expr5 
+
+	PLUS  shift 21
+	MINUS  shift 22
+	XOR  shift 24
+	BITOR  shift 23
+	.  reduce 9 (src line 71)
+
+
+state 37
+	expr3:  expr3 EQ EQ.expr4 
+
+	NUM  shift 11
+	IDENT  shift 12
+	MINUS  shift 10
+	LPR  shift 9
+	.  error
+
+	variable  goto 8
+	expr4  goto 51
+	expr5  goto 6
+	expr6  goto 7
+
+state 38
+	expr3:  expr3 NEQ expr4.    (11)
+	expr4:  expr4.PLUS expr5 
+	expr4:  expr4.MINUS expr5 
+	expr4:  expr4.BITOR expr5 
+	expr4:  expr4.XOR expr5 
+
+	PLUS  shift 21
+	MINUS  shift 22
+	XOR  shift 24
+	BITOR  shift 23
+	.  reduce 11 (src line 87)
+
+
+state 39
+	expr3:  expr3 LES expr4.    (12)
+	expr4:  expr4.PLUS expr5 
+	expr4:  expr4.MINUS expr5 
+	expr4:  expr4.BITOR expr5 
+	expr4:  expr4.XOR expr5 
+
+	PLUS  shift 21
+	MINUS  shift 22
+	XOR  shift 24
+	BITOR  shift 23
+	.  reduce 12 (src line 95)
+
+
+state 40
+	expr3:  expr3 GRT expr4.    (13)
+	expr4:  expr4.PLUS expr5 
+	expr4:  expr4.MINUS expr5 
+	expr4:  expr4.BITOR expr5 
+	expr4:  expr4.XOR expr5 
+
+	PLUS  shift 21
+	MINUS  shift 22
+	XOR  shift 24
+	BITOR  shift 23
+	.  reduce 13 (src line 103)
+
+
+state 41
+	expr4:  expr4 PLUS expr5.    (15)
+	expr5:  expr5.MULT expr6 
+	expr5:  expr5.DIV expr6 
+	expr5:  expr5.MOD expr6 
+	expr5:  expr5.BITAND expr6 
+
+	MULT  shift 25
+	DIV  shift 26
+	MOD  shift 27
+	BITAND  shift 28
+	.  reduce 15 (src line 115)
+
+
+state 42
+	expr4:  expr4 MINUS expr5.    (16)
+	expr5:  expr5.MULT expr6 
+	expr5:  expr5.DIV expr6 
+	expr5:  expr5.MOD expr6 
+	expr5:  expr5.BITAND expr6 
+
+	MULT  shift 25
+	DIV  shift 26
+	MOD  shift 27
+	BITAND  shift 28
+	.  reduce 16 (src line 119)
+
+
+state 43
+	expr4:  expr4 BITOR expr5.    (17)
+	expr5:  expr5.MULT expr6 
+	expr5:  expr5.DIV expr6 
+	expr5:  expr5.MOD expr6 
+	expr5:  expr5.BITAND expr6 
+
+	MULT  shift 25
+	DIV  shift 26
+	MOD  shift 27
+	BITAND  shift 28
+	.  reduce 17 (src line 123)
+
+
+state 44
+	expr4:  expr4 XOR expr5.    (18)
+	expr5:  expr5.MULT expr6 
+	expr5:  expr5.DIV expr6 
+	expr5:  expr5.MOD expr6 
+	expr5:  expr5.BITAND expr6 
+
+	MULT  shift 25
+	DIV  shift 26
+	MOD  shift 27
+	BITAND  shift 28
+	.  reduce 18 (src line 124)
+
+
+state 45
+	expr5:  expr5 MULT expr6.    (20)
+
+	.  reduce 20 (src line 132)
+
+
+state 46
+	expr5:  expr5 DIV expr6.    (21)
+
+	.  reduce 21 (src line 136)
+
+
+state 47
+	expr5:  expr5 MOD expr6.    (22)
+
+	.  reduce 22 (src line 140)
+
+
+state 48
+	expr5:  expr5 BITAND expr6.    (23)
+
+	.  reduce 23 (src line 144)
+
+
+state 49
+	expr6:  LPR expr1 RPR.    (25)
+
+	.  reduce 25 (src line 150)
+
+
+state 50
+	expr1:  expr1.OR expr2 
+	variable:  IDENT LSB expr1.RSB 
+
+	OR  shift 13
+	RSB  shift 52
+	.  error
+
+
+state 51
+	expr3:  expr3 EQ EQ expr4.    (10)
+	expr4:  expr4.PLUS expr5 
+	expr4:  expr4.MINUS expr5 
+	expr4:  expr4.BITOR expr5 
+	expr4:  expr4.XOR expr5 
+
+	PLUS  shift 21
+	MINUS  shift 22
+	XOR  shift 24
+	BITOR  shift 23
+	.  reduce 10 (src line 79)
+
+
+state 52
+	variable:  IDENT LSB expr1 RSB.    (29)
+
+	.  reduce 29 (src line 167)
+
+
+25 terminals, 9 nonterminals
+30 grammar rules, 53/16000 states
+0 shift/reduce, 0 reduce/reduce conflicts reported
+58 working sets used
+memory: parser 94/240000
+50 extra closures
+155 shift entries, 1 exceptions
+28 goto entries
+54 entries saved by goto default
+Optimizer space used: output 64/240000
+64 table entries, 4 zero
+maximum spread: 25, maximum offset: 37
